@@ -1,0 +1,2 @@
+Invoking command in '/home/alex/Documents/student_promobot/build/cpp_pubsub': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/alex/Documents/student_promobot/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/home/alex/Documents/student_promobot/install/cpp_pubsub
+Invoked command in '/home/alex/Documents/student_promobot/build/cpp_pubsub' returned '-2': CMAKE_PREFIX_PATH=/opt/ros/humble /usr/bin/cmake /home/alex/Documents/student_promobot/cpp_pubsub -DCMAKE_INSTALL_PREFIX=/home/alex/Documents/student_promobot/install/cpp_pubsub
