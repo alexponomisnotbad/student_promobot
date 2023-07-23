@@ -8,17 +8,19 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-using namespace std::chrono_literals;
-int n;
+int c_timeout_ms;
 class MinimalPublisher : public rclcpp::Node
 {
 public:
+
+  static const char* _topic = "topic"
+  static const size_t _size = 10
   MinimalPublisher()
-  : Node("minimal_publisher"), count_(0)
+  : Node("minimal_publisher"), _ncount(0)
   {
-    publisher_ = this->create_publisher<std_msgs::msg::String>("topic", 10);
-    timer_ = this->create_wall_timer(
-    std::chrono::nanoseconds(n) , std::bind(&MinimalPublisher::timer_callback, this));
+    _ppublisher = this->create_publisher<std_msgs::msg::String>(_topic, _size);
+    _ptimer = this->create_wall_timer(
+    std::chrono::seconds(c_timeout_ms) , std::bind(&MinimalPublisher:: _timer_callback, this));
   }
   private:
     void timer_callback()
@@ -26,18 +28,16 @@ public:
       auto message = std_msgs::msg::String();
       message.data = "Hello, I am alive! ";
       RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
-      publisher_->publish(message);
-      std::this_thread::sleep_for(std::chrono::seconds(n));
+      _ppublisher->publish(message);
+      std::this_thread::sleep_for(std::chrono::seconds(c_timeout_ms));
     }
-    rclcpp::TimerBase::SharedPtr timer_;
-    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
-    size_t count_;
+    rclcpp::TimerBase::SharedPtr _ptimer;
+    rclcpp::Publisher<std_msgs::msg::String>::SharedPtr _ppublisher;
+    size_t _ncount;
 };
 int main(int argc, char * argv[])
 {
-  std::cout << "Введите целое число: ";
-  std::cin >> n;
-  std::cout << "Вы ввели число: " << n << std::endl;
+  c_timeout_ms = 2
   rclcpp::init(argc, argv);
   rclcpp::spin(std::make_shared<MinimalPublisher>());
   rclcpp::shutdown();
