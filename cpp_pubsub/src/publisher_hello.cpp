@@ -19,8 +19,11 @@ public:
   : Node("minimal_publisher"), _ncount(0)
   {
     _ppublisher = this->create_publisher<std_msgs::msg::String>(_topic, _size);
+    { 
+    using namespace std::chrono_literals;
     _ptimer = this->create_wall_timer(
     std::chrono::seconds(c_timeout_ms) , std::bind(&MinimalPublisher:: _timer_callback, this));
+    }
   }
   private:
     void timer_callback()
