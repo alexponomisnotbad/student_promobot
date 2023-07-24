@@ -1,5 +1,19 @@
 # http://www.gnu.org/software/automake
-
+build
+devel
+install
+src
+log
+test_results
+*.workspace
+*.user
+.catkin_tools/
+.catkin_workspace
+.vscode/
+vcs_p.json
+/coverage_report
+.idea
+pycache
 Makefile.in
 /ar-lib
 /mdate-sh
