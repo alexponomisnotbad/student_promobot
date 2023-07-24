@@ -8,7 +8,7 @@
 #include "rclcpp/rclcpp.hpp"
 #include "std_msgs/msg/string.hpp"
 
-int uint16_t const c_timeout_ms = 2;
+const uint16_t c_timeout_ms = 2;
 class MinimalPublisher : public rclcpp::Node
 {
 public:
@@ -28,6 +28,7 @@ public:
       RCLCPP_INFO(this->get_logger(), "Publishing: '%s'", message.data.c_str());
       std::this_thread::sleep_for(std::chrono::seconds(c_timeout_ms));
     }
+  private:
     rclcpp::TimerBase::SharedPtr _ptimer;
 };
 int main(int argc, char * argv[])
