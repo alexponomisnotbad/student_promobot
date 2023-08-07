@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.8)
-project(cpp_pubsub)
-
+project(two_nodes)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/hpp)
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
@@ -16,14 +16,15 @@ find_package(std_msgs REQUIRED)
 
 
 
-add_executable(talker src/publisher_hello.cpp)
+add_executable(talker src/one_node.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
 
-
-
+add_executable(listener src/two_node.cpp)
+ament_target_dependencies(listener rclcpp std_msgs)
 
 install(TARGETS
   talker
+  listener
   DESTINATION lib/${PROJECT_NAME})
 
   
