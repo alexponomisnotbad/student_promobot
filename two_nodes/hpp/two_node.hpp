@@ -7,6 +7,7 @@
 static constexpr char* c_topic = "publisher";
 static constexpr char* c_subtopic = "subscriber";
 static const uint8_t c_queue_size = 10;
+static const uint32_t c_test_data = 999;
 
 class TwoNode : public rclcpp::Node
 {
@@ -25,7 +26,7 @@ class TwoNode : public rclcpp::Node
       RCLCPP_INFO(this->get_logger(), "I heard: '%s'", msg.data.c_str()); 
 
       auto message = std_msgs::msg::Int32();
-      message.data = 999;
+      message.data = c_test_data;
       RCLCPP_INFO(this->get_logger(), std::to_string(message.data).c_str());
       _ppublisher->publish(message);  
     }
