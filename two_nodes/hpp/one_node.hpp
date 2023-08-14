@@ -10,10 +10,9 @@
 
 static constexpr char * c_topic = "publisher";
 static constexpr char * c_subtopic = "subscriber";
-uint8_t _onenode_queue_size_prm = 10;
-uint8_t time_interval_sec_prm = 10;
-uint8_t _onenode_member_queue_size = 0;
-uint8_t _onenode_member_time_interval_sec = 10;
+static constexpr char * c_timer_parameter = "timer_parameter";
+static constexpr char * c_queue_parameter = "queue_parameter";
+
 
 class OneNode : public rclcpp::Node
 {
@@ -21,18 +20,22 @@ public:
   OneNode()
   : Node("first_node"), _ncount(0)
   {
-    this->declare_parameter("timer_parameter", time_interval_sec_prm);
-    
-    this->declare_parameter("_onenode_queue_parameter", _onenode_queue_size_prm);
-    
-    _onenode_member_queue_size = this->get_parameter("_onenode_queue_parameter").as_int();
-    _ppublisher = this->create_publisher<std_msgs::msg::String>(c_topic, _onenode_member_queue_size);
+    this->declare_parameter(c_timer_parameter, timer_interval_sec_prm);
+    this->declare_parameter(c_queue_parameter, queue_size_prm);
+    queue_size = this->get_parameter(c_queue_parameter).as_int();
+    _ppublisher = this->create_publisher<std_msgs::msg::String>(c_topic, queue_size);
     _psubscription = this->create_subscription<std_msgs::msg::Int32>(
-    c_subtopic, _onenode_member_queue_size, std::bind(&OneNode::сallback, this, std::placeholders::_1));
-    _onenode_member_time_interval_sec = this->get_parameter("timer_parameter").as_int();
+    c_subtopic, queue_size, std::bind(&OneNode::сallback, this, std::placeholders::_1));
+    timer_interval_sec = this->get_parameter(c_timer_parameter).as_int();
     _ptimer = this->create_wall_timer(
-      std::chrono::seconds(_onenode_member_time_interval_sec), std::bind(&OneNode::timerCallback, this));
+      std::chrono::seconds(timer_interval_sec), std::bind(&OneNode::timerCallback, this));
   }
+
+public:
+const uint8_t queue_size_prm = 10;
+const uint8_t timer_interval_sec_prm = 10;
+uint8_t queue_size = 0;
+uint8_t timer_interval_sec = 0;
 
 private:
   void timerCallback()
