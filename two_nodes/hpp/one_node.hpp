@@ -20,8 +20,8 @@ public:
   OneNode()
   : Node("first_node"), _ncount(0)
   {
-    this->declare_parameter(c_timer_parameter, timer_interval_sec_prm);
-    this->declare_parameter(c_queue_parameter, queue_size_prm);
+    this->declare_parameter(c_timer_parameter, c_timer_interval_sec_prm);
+    this->declare_parameter(c_queue_parameter, c_queue_size_prm);
     queue_size = this->get_parameter(c_queue_parameter).as_int();
     _ppublisher = this->create_publisher<std_msgs::msg::String>(c_topic, queue_size);
     _psubscription = this->create_subscription<std_msgs::msg::Int32>(
@@ -32,8 +32,8 @@ public:
   }
 
 public:
-const uint8_t queue_size_prm = 10;
-const uint8_t timer_interval_sec_prm = 10;
+const uint8_t c_queue_size_prm = 10;
+const uint8_t c_timer_interval_sec_prm = 10;
 uint8_t queue_size = 0;
 uint8_t timer_interval_sec = 0;
 
