@@ -13,8 +13,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
-
-
+	
 
 add_executable(talker src/one_node.cpp)
 ament_target_dependencies(talker rclcpp std_msgs)
@@ -26,6 +25,14 @@ install(TARGETS
   talker
   listener
   DESTINATION lib/${PROJECT_NAME})
+	
+install(DIRECTORY 
+  launch 
+  DESTINATION share/${PROJECT_NAME}/)
 
+install(DIRECTORY
+  parameters
+  DESTINATION share/${PROJECT_NAME}/
+)  
   
 ament_package()
